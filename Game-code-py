@@ -1,0 +1,39 @@
+import random
+import string
+
+# Generate a random word
+words = ['apple', 'banana', 'orange', 'grape']
+word = random.choice(words)
+
+# Set up the game state
+incorrect_guesses = 0
+guesses = []
+word_letters = set(word)
+alphabet = set(string.ascii_lowercase)
+
+# Main game loop
+while len(word_letters) > 0 and incorrect_guesses < 6:
+    # Display the game state
+    print("Incorrect guesses:", incorrect_guesses)
+    print("Already guessed:", ' '.join(guesses))
+    print("Word:", ' '.join([letter if letter in guesses else '_' for letter in word]))
+
+    # Prompt the player for their next guess
+    next_guess = input("Enter a letter: ")
+
+    # Check the player's guess
+    if next_guess in alphabet:
+        alphabet.remove(next_guess)
+        if next_guess in word_letters:
+            word_letters.remove(next_guess)
+        else:
+            incorrect_guesses += 1
+        guesses.append(next_guess)
+    else:
+        print("Invalid input. Please enter a letter.")
+
+# Announce the result of the game
+if len(word_letters) == 0:
+    print("Congratulations! You won!")
+else:
+    print("Sorry, you lost. The word was:", word)
